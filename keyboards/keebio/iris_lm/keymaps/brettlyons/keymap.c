@@ -16,6 +16,22 @@
 #define HOME_I LALT_T(KC_I)
 #define HOME_O RGUI_T(KC_O)
 
+// Tap dance declarations
+enum {
+    TD_Z_UNDO,
+    TD_X_CUT,
+    TD_C_COPY,
+    TD_V_PASTE
+};
+
+// Tap dance definitions
+tap_dance_action_t tap_dance_actions[] = {
+    [TD_Z_UNDO]  = ACTION_TAP_DANCE_DOUBLE(KC_Z, C(KC_Z)),
+    [TD_X_CUT]   = ACTION_TAP_DANCE_DOUBLE(KC_X, C(KC_X)),
+    [TD_C_COPY]  = ACTION_TAP_DANCE_DOUBLE(KC_C, C(KC_C)),
+    [TD_V_PASTE] = ACTION_TAP_DANCE_DOUBLE(KC_V, C(KC_V))
+};
+
 enum custom_layers {
      _QWERTY,
      _LOWER,
@@ -32,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_ESC,  HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,                               KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,  KC_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_HOME,          KC_END,  KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+     KC_LSFT, TD(TD_Z_UNDO), TD(TD_X_CUT), TD(TD_C_COPY), KC_D, TD(TD_V_PASTE), KC_HOME,          KC_END,  KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     KC_LGUI, TL_LOWR, KC_ENT,                    KC_SPC,  TL_UPPR, KC_RALT
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
