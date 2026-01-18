@@ -21,15 +21,17 @@ enum {
     TD_Z_UNDO,
     TD_X_CUT,
     TD_C_COPY,
-    TD_V_PASTE
+    TD_V_PASTE,
+    TD_BSPC_WORD
 };
 
 // Tap dance definitions
 tap_dance_action_t tap_dance_actions[] = {
-    [TD_Z_UNDO]  = ACTION_TAP_DANCE_DOUBLE(KC_Z, C(KC_Z)),
-    [TD_X_CUT]   = ACTION_TAP_DANCE_DOUBLE(KC_X, C(KC_X)),
-    [TD_C_COPY]  = ACTION_TAP_DANCE_DOUBLE(KC_C, C(KC_C)),
-    [TD_V_PASTE] = ACTION_TAP_DANCE_DOUBLE(KC_V, C(KC_V))
+    [TD_Z_UNDO]    = ACTION_TAP_DANCE_DOUBLE(KC_Z, C(KC_Z)),
+    [TD_X_CUT]     = ACTION_TAP_DANCE_DOUBLE(KC_X, C(KC_X)),
+    [TD_C_COPY]    = ACTION_TAP_DANCE_DOUBLE(KC_C, C(KC_C)),
+    [TD_V_PASTE]   = ACTION_TAP_DANCE_DOUBLE(KC_V, C(KC_V)),
+    [TD_BSPC_WORD] = ACTION_TAP_DANCE_DOUBLE(KC_BSPC, C(KC_BSPC))
 };
 
 enum custom_layers {
@@ -42,15 +44,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     QK_GESC, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
+     KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                               KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_DEL,
+     KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                               KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_ESC,  HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,                               KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,  KC_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, TD(TD_Z_UNDO), TD(TD_X_CUT), TD(TD_C_COPY), KC_D, TD(TD_V_PASTE), KC_HOME,          KC_END,  KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LGUI, TL_LOWR, KC_BSPC,                   KC_ENT,  KC_SPC,  TL_UPPR
+                                    KC_LGUI, TL_LOWR, TD(TD_BSPC_WORD),          KC_ENT,  KC_SPC,  TL_UPPR
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
