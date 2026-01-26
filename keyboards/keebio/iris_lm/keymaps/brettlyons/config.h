@@ -3,6 +3,9 @@
 
 #pragma once
 
+#define TAPPING_TERM 230
+#define DYNAMIC_TAPPING_TERM_INCREMENT 5
+
 #define CHORDAL_HOLD
 // #define HOLD_ON_OTHER_KEY_PRESS  // Opposite-hand chord settles immediately as held
-// #define PERMISSIVE_HOLD          // Opposite-hand chord settles as held on nested press
+#define PERMISSIVE_HOLD          // Opposite-hand chord settles as held on nested press

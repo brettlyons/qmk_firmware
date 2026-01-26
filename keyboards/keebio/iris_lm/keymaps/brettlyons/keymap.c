@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include QMK_KEYBOARD_H
-#define TAPPING_TERM 200
 
 // Left-hand home row mods
 #define HOME_A LGUI_T(KC_A)
@@ -15,24 +14,6 @@
 #define HOME_E RSFT_T(KC_E)
 #define HOME_I LALT_T(KC_I)
 #define HOME_O RGUI_T(KC_O)
-
-// Tap dance declarations
-enum {
-    TD_Z_UNDO,
-    TD_X_CUT,
-    TD_C_COPY,
-    TD_V_PASTE,
-    TD_BSPC_WORD
-};
-
-// Tap dance definitions
-tap_dance_action_t tap_dance_actions[] = {
-    [TD_Z_UNDO]    = ACTION_TAP_DANCE_DOUBLE(KC_Z, C(KC_Z)),
-    [TD_X_CUT]     = ACTION_TAP_DANCE_DOUBLE(KC_X, C(KC_X)),
-    [TD_C_COPY]    = ACTION_TAP_DANCE_DOUBLE(KC_C, C(KC_C)),
-    [TD_V_PASTE]   = ACTION_TAP_DANCE_DOUBLE(KC_V, C(KC_V)),
-    [TD_BSPC_WORD] = ACTION_TAP_DANCE_DOUBLE(KC_BSPC, C(KC_BSPC))
-};
 
 enum custom_layers {
      _QWERTY,
@@ -50,9 +31,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_ESC,  HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,                               KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,  KC_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT, TD(TD_Z_UNDO), TD(TD_X_CUT), TD(TD_C_COPY), KC_D, TD(TD_V_PASTE), KC_HOME,          KC_END,  KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_HOME,          KC_END,  KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LGUI, TL_LOWR, TD(TD_BSPC_WORD),          KC_ENT,  KC_SPC,  TL_UPPR
+                                    KC_LGUI, TL_LOWR, QK_LEAD,                   KC_ENT,  KC_SPC,  TL_UPPR
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
@@ -64,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, _______, KC_LBRC,                            KC_RBRC, KC_P4,   KC_P5,   KC_P6,   KC_PLUS, KC_PIPE,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     RM_NEXT, EE_CLR,  _______, _______, _______, KC_LCBR, KC_LPRN,          KC_RPRN, KC_RCBR, KC_P1,   KC_P2,   KC_P3,   KC_MINS, _______,
+     RM_NEXT, EE_CLR,  DT_DOWN, DT_PRNT, DT_UP,   KC_LCBR, KC_LPRN,          KC_RPRN, KC_RCBR, KC_P1,   KC_P2,   KC_P3,   KC_MINS, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, KC_DEL,                    KC_DEL,  _______, KC_P0
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -84,3 +65,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   )
 };
+
+void leader_end_user(void) {
+    // Undo: Leader -> z
+    if (leader_sequence_one_key(KC_Z)) {
+        tap_code16(C(KC_Z));
+    }
+    // Cut: Leader -> x
+    if (leader_sequence_one_key(KC_X)) {
+        tap_code16(C(KC_X));
+    }
+    // Copy: Leader -> c
+    if (leader_sequence_one_key(KC_C)) {
+        tap_code16(C(KC_C));
+    }
+    // Paste: Leader -> v
+    if (leader_sequence_one_key(KC_V)) {
+        tap_code16(C(KC_V));
+    }
+    // Word delete: Leader -> Leader (double-tap)
+    if (leader_sequence_one_key(QK_LEAD)) {
+        tap_code16(C(KC_BSPC));
+    }
+}
